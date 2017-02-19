@@ -501,7 +501,7 @@
 	"Population": "227,000"
   }
 ];
-	$.ajaxSetup({
+	jquery.ajaxSetup({
         async: false
     });
 	var loopcount =0
@@ -510,69 +510,50 @@
 		elemDiv.setAttribute("id",i);
 		document.body.appendChild(elemDiv);
 		}	
-	/*
-	//want to be able to hit return
-	$('.input').keypress(function (e) {
-  		if (e.which == 13) {
-    	$('form#searchform').submit();
-    	return false;
-  		}
-		});
-		*/
-	  $("#search").click(function(){
+	
+	  jquery("#search").click(function(){
 		for (var k=0; k<cities.length; k++) {
 			//clear divs
-			$("#"+k).remove()
+			jquery("#"+k).remove()
 			var elemDiv = document.createElement('div');
 			elemDiv.setAttribute("id",k);
 			document.body.appendChild(elemDiv);
 			loopcount = k;
 			var cityname = cities[k].City;
 			var countryname = cities[k].Country;
-			$("#"+k).append("<h2>"+cityname+", "+countryname+"</h2>");
-// 			$("#"+k).append("<p>Population: " + cities[k].Population);
-			$("#"+k).append("<p>Population: " + cities[k].Population + '. <a href="https://google.com/maps?q='+cityname+"+"+countryname+'">Google Maps link</a>. <a href="https://en.wikipedia.org/wiki/'+cityname+'">Wikipedia link.</a></p><div class="images"></div>');
-			var tagtext = $("#searchterm");
-			$.ajax({
+			jquery("#"+k).append("<h2>"+cityname+", "+countryname+"</h2>");
+// 			jquery("#"+k).append("<p>Population: " + cities[k].Population);
+			jquery("#"+k).append("<p>Population: " + cities[k].Population + '. <a href="https://google.com/maps?q='+cityname+"+"+countryname+'">Google Maps link</a>. <a href="https://en.wikipedia.org/wiki/'+cityname+'">Wikipedia link.</a></p><div class="images"></div>');
+			var tagtext = jquery("#searchterm");
+			jquery.ajax({
 				url: "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
 				dataType: 'json',
-				qty_input: $(this),
+				qty_input: jquery(this),
         		div_to_append: loopcount,
 				data: {
-		  			tags: $("#searchterm").val() + ","+cityname,
+		  			tags: jquery("#searchterm").val() + ","+cityname,
 					//	tags: "groningen,street",
 		  			tagmode: "all",
 		  			format: "json"
 					},
 				async: false,
 				success: appendDiv(k)
-				/*
-				success: function(data) {
-					$.each(data.items, function(j,item){
-		  				console.log(item.tags);
-		  				var divid = this.div_to_append;
-						$("<img />").attr("src", item.media.m).prependTo(divid);
-						
-						console.log(divid);
-						if ( j == 10 ) return false;
-						});
-					}
-					*/
+				
 				});
 		}
 	  });
 	  
 	  var appendDiv = function(index) {
 	  	return function(data) {
-	  		$.each(data.items, function(j,item){
+	  		jquery.each(data.items, function(j,item){
 		  		console.log(item);
 		  		var divid = "#" + index + " .images";
 		  		var imgid = index + "_" + j;
-		  		var htmlToAppend = $("<img />").attr({src: item.media.m, class: "image", id: imgid});
+		  		var htmlToAppend = jquery("<img />").attr({src: item.media.m, class: "image", id: imgid});
 		  		htmlToAppend.prependTo(divid);
-		  		$('#'+imgid).wrap('<a href="'+ item.link+'"></a>');
+		  		jquery('#'+imgid).wrap('<a href="'+ item.link+'"></a>');
 // 				htmlToAppend.prependTo(divid);
-// 				$(divid+'img').wrap('<a href="https://google.com></a>');
+// 				jquery(divid+'img').wrap('<a href="https://google.com></a>');
 				console.log(divid);
 				if ( j == 10 ) return false;
 				});
