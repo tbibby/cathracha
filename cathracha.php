@@ -59,7 +59,7 @@ class cathracha {
 		if($contains_form) {
 			wp_enqueue_script('cathracha-js');
 			//jquery is built in to WordPress, apparently...
-			wp_enqueue_script('jquery');
+// 			wp_enqueue_script('jquery');
 		}
 		
 	}
